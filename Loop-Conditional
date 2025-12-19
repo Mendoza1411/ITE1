@@ -1,1 +1,58 @@
+using System;
+
+class LoopProgram
+{
+    static void Main()
+    {
+        int items;
+        while (true)
+        {
+            Console.Write("How many items? ");
+            string? itemsInput = Console.ReadLine();
+            if (int.TryParse(itemsInput, out items) && items > 0)
+                break;
+
+            Console.WriteLine("Please enter a positive integer for the number of items.");
+        }
+
+        double totalBeforeDiscount = 0;
+
+        for (int i = 1; i <= items; i++)
+        {
+            double price;
+            while (true)
+            {
+                Console.Write($"Price of item {i}: ");
+                string? priceInput = Console.ReadLine();
+                if (double.TryParse(priceInput, out price) && price >= 0)
+                    break;
+
+                Console.WriteLine("Please enter a non-negative number for the price.");
+            }
+
+            totalBeforeDiscount += price;
+        }
+
+        double discountRate = 0;
+
+        if (items >= 3 && items <= 5)
+        {
+            discountRate = 0.05;
+        }
+        else if (items >= 6 && items <= 10)
+        {
+            discountRate = 0.10;
+        }
+        else if (items > 10)
+        {
+            discountRate = 0.15;
+        }
+
+        double discountAmount = totalBeforeDiscount * discountRate;
+        double totalAfterDiscount = totalBeforeDiscount - discountAmount;
+
+        Console.WriteLine($"The discount is: {discountAmount:f2}");
+        Console.WriteLine($"The total bill is: {totalAfterDiscount:f2}");
+    }
+}
 
