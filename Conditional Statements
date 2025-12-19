@@ -1,0 +1,41 @@
+using System;
+using System.Globalization;
+
+class Program
+{
+    static void Main()
+    {
+        float length = ReadPositiveFloat("Enter the length: ");
+        float width  = ReadPositiveFloat("Enter the width:  ");
+        float area   = length * width;
+        Console.WriteLine("The area of rectangle is: " + area);
+        Console.WriteLine("The area of rectangle is: {0:F2}", area);
+        Console.WriteLine($"The area of rectangle is: {area:F2}");
+    }
+
+    static float ReadPositiveFloat(string prompt)
+    {
+        while (true)
+        {
+            Console.Write(prompt);
+            string? input = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("Input cannot be empty. Please enter a numeric value.");
+                continue;
+            }
+            if (float.TryParse(input, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var value) ||
+                float.TryParse(input, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.CurrentCulture, out value))
+            {
+                if (value > 0f)
+                    return value;
+
+                Console.WriteLine("Value must be greater than zero. Try again.");
+                continue;
+            }
+
+            Console.WriteLine("Invalid number format. Use digits.");
+        }
+    }
+}
